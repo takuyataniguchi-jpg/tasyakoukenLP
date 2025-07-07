@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>他者貢献がもたらす、新しい自分との出会い</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Reset & Base --- */
+        :root {
+            --primary-light: #FFB74D; /* Slightly softer orange */
+            --primary-dark: #FF6F00;
+            --accent-gray: #F8F9FA; /* Warmer light gray */
+            --text-dark: #222222;   /* Darker text for readability */
+            --cta-orange: #FF5C00;
+            --bg-light-orange: #FFF3E0;
+            --white: #FFFFFF;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: "Noto Sans JP", sans-serif;
+            color: var(--text-dark);
+            line-height: 1.8;
+            background-color: var(--white);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        section {
+            padding: 72px 24px;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 48px;
+            color: var(--primary-dark);
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: var(--cta-orange);
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 92, 0, 0.4);
+        }
+
+        /* --- 0. Index Navigation --- */
+        .lp-index {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .lp-index__container {
+            display: flex;
+            justify-content: flex-end; /* Changed to push nav to the right */
+            align-items: center;
+            padding: 12px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .lp-index__logo {
+            display: none; /* Hide the logo element */
+        }
+        .lp-index__hamburger {
+            display: block;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            position: relative;
+            z-index: 1000;
+        }
+        .lp-index__hamburger span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-dark);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        .lp-index__hamburger span:nth-child(1) { top: 0; }
+        .lp-index__hamburger span:nth-child(2) { top: 9px; }
+        .lp-index__hamburger span:nth-child(3) { bottom: 0; }
+        .lp-index__hamburger.is-active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .lp-index__hamburger.is-active span:nth-child(2) { opacity: 0; }
+        .lp-index__hamburger.is-active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+        
+        .lp-index__nav-list {
+            list-style: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+        }
+        .lp-index__nav-list.is-active {
+            transform: translateX(0);
+        }
+        .lp-index__nav-item {
+            margin: 20px 0;
+        }
+        .lp-index__nav-link {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        /* --- 1. Hero --- */
+        .lp-hero {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            color: var(--white);
+            text-align: center;
+            padding: 120px 24px 96px; /* Adjusted padding */
+        }
+        .lp-hero__image-wrapper {
+            margin-bottom: 48px;
+        }
+        .lp-hero__image {
+            max-width: 350px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .lp-hero__title {
+            font-size: 2.2rem;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .lp-hero__subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        /* --- 2. Psychological Benefits --- */
+        .lp-psychology {
+            background-color: var(--bg-light-orange);
+        }
+        .lp-psychology__cards {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .lp-psychology__card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            text-align: center;
+            overflow: hidden; /* Important for containing the image */
+            display: flex;
+            flex-direction: column;
+        }
+        .lp-psychology__card-icon {
+            width: 100%;
+            height: 260px; /* Further increased height */
+            object-fit: cover;
+        }
+        .lp-psychology__card-content {
+            padding: 24px;
+        }
+        .lp-psychology__card-title {
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        /* --- 3. Evidence --- */
+        .lp-evidence__container {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+        .lp-evidence__stats {
+            text-align: center;
+        }
+        .lp-evidence__stat-item {
+            margin-bottom: 32px;
+        }
+        .lp-evidence__stat-number {
+            font-size: 3.5rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        .lp-evidence__stat-text {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .lp-evidence__expert {
+            background: var(--accent-gray);
+            padding: 32px;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary-light);
+        }
+        .lp-evidence__expert-comment {
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+        .lp-evidence__expert-source {
+            font-weight: 700;
+            text-align: right;
+        }
+
+        /* --- 4. Story Carousel --- */
+        .lp-story {
+            background-color: var(--accent-gray);
+        }
+        .lp-story__carousel {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .lp-story__slide {
+            display: none;
+            padding: 32px;
+            background: var(--white);
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            text-align: center;
+        }
+        .lp-story__slide.is-active {
+            display: block;
+        }
+        .lp-story__photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 24px;
+            border: 4px solid var(--primary-light);
+        }
+        .lp-story__comment {
+            margin-bottom: 16px;
+            min-height: 80px;
+        }
+        .lp-story__name {
+            font-weight: 700;
+        }
+
+        /* --- 5. Career & Business --- */
+        .lp-career {
+            background: linear-gradient(160deg, var(--primary-light) 40%, var(--white) 40%);
+        }
+        .lp-career__title {
+            color: var(--primary-dark);
+        }
+        .lp-career__list {
+            list-style: none;
+            margin-top: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .lp-career__item {
+            background: var(--white);
+            padding: 24px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .lp-career__item::before {
+            content: '✔';
+            display: inline-block;
+            margin-right: 16px;
+            color: var(--white);
+            background-color: var(--primary-dark);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            flex-shrink: 0;
+        }
+
+        /* --- 6. Social Impact --- */
+        .lp-impact__infographic {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+        .lp-impact__step {
+            text-align: center;
+            max-width: 300px;
+        }
+        .lp-impact__icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 16px;
+        }
+        .lp-impact__step h3 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        .lp-impact__arrow {
+            font-size: 2rem;
+            color: var(--primary-light);
+            transform: rotate(90deg);
+        }
+
+        /* --- 7. Final CTA --- */
+        .lp-cta {
+            background: var(--primary-dark);
+            color: var(--white);
+            text-align: center;
+        }
+        .lp-cta__title {
+            font-size: 2rem;
+            margin-bottom: 32px;
+            color: var(--white);
+        }
+        .lp-cta__form-mock {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .lp-cta__input {
+            padding: 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .lp-cta__button {
+            background: var(--white);
+            color: var(--cta-orange);
+            padding: 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* --- 8. Footer --- */
+        .lp-footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 48px 24px;
+        }
+        .lp-footer__logo {
+            font-family: "Montserrat", sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+        }
+        .lp-footer__links a {
+            margin: 0 12px;
+            color: var(--accent-gray);
+            font-size: 0.9rem;
+        }
+
+        .lp-hero__container {
+            display: flex;
+            flex-direction: column-reverse; /* Image on top on mobile */
+            align-items: center;
+        }
+
+        /* --- Media Query for Desktop --- */
+        @media (min-width: 768px) {
+            .lp-hero__container {
+                flex-direction: row;
+                text-align: left;
+                gap: 48px;
+            }
+            .lp-hero__text-content {
+                flex: 1;
+            }
+            .lp-hero__image-wrapper {
+                flex: 0 0 45%; /* Increased from 40% */
+                margin-bottom: 0;
+            }
+            .section-title { font-size: 3rem; }
+
+            .lp-index__hamburger { display: none; }
+            .lp-index__nav-list {
+                position: static;
+                flex-direction: row;
+                height: auto;
+                width: auto;
+                background: transparent;
+                transform: none;
+                transition: none;
+            }
+            .lp-index__nav-item { margin: 0 16px; }
+            .lp-index__nav-link { font-size: 1rem; }
+
+            .lp-hero__title { font-size: 3.5rem; }
+            .lp-hero__subtitle { font-size: 1.2rem; }
+
+            .lp-psychology__cards {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .lp-psychology__card {
+                width: calc(33.333% - 16px);
+            }
+
+            .lp-evidence__container {
+                flex-direction: row;
+                align-items: center;
+                gap: 64px;
+            }
+            .lp-evidence__stats {
+                width: 40%;
+                text-align: right;
+            }
+            .lp-evidence__expert {
+                width: 60%;
+            }
+
+            .lp-career__list {
+                max-width: 100%;
+                display: flex;
+                justify-content: space-around;
+                gap: 24px;
+            }
+             .lp-career__item {
+                width: calc(33.333% - 16px);
+            }
+
+            .lp-impact__infographic {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+            }
+            .lp-impact__arrow {
+                transform: rotate(0);
+                margin-top: 50px;
+            }
+
+            .lp-cta__form-mock {
+                flex-direction: row;
+            }
+            .lp-cta__input {
+                flex-grow: 1;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 0. Index Navigation -->
+    <nav class="lp-index">
+        <div class="lp-index__container">
+            <div class="lp-index__logo"></div>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="lp-index__nav-list">
+                <li class="lp-index__nav-item"><a href="#psychology" class="lp-index__nav-link">心理的メリット</a></li>
+                <li class="lp-index__nav-item"><a href="#evidence" class="lp-index__nav-link">エビデンス</a></li>
+                <li class="lp-index__nav-item"><a href="#story" class="lp-index__nav-link">体験談</a></li>
+                <li class="lp-index__nav-item"><a href="#career" class="lp-index__nav-link">キャリア</a></li>
+                <li class="lp-index__nav-item"><a href="#impact" class="lp-index__nav-link">社会的インパクト</a></li>
+                <li class="lp-index__nav-item"><a href="#cta" class="lp-index__nav-link">始める</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="hero" class="lp-hero">
+            <div class="container lp-hero__container">
+                <div class="lp-hero__text-content">
+                    <h1 class="lp-hero__title">誰かの為が<br>いつの間にか<br>“自分のために”<br>なる瞬間</h1>
+                    <p style="font-size: 1.2rem; font-weight: 700; margin: 24px 0 8px; color: rgba(255,255,255,0.9);">それが</p>
+                    <p style="font-size: 4.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 36px; text-shadow: 0 4px 12px rgba(0,0,0,0.35);">【他者貢献】</p>
+                    <p class="lp-hero__subtitle">幸福感・成長・つながり――<br>他者貢献がもたらす6つのメリットを体感しよう。</p>
+                    <a href="#cta" class="cta-button">今すぐ体験する</a>
+                </div>
+                <div class="lp-hero__image-wrapper">
+                    <img src="トップ用画像.png" alt="他者貢献をイメージしたイラスト" class="lp-hero__image">
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Psychological Benefits -->
+        <section id="psychology" class="lp-psychology">
+            <div class="container">
+                <h2 class="section-title">心と脳が、喜んでいる。</h2>
+                <div class="lp-psychology__cards">
+                    <div class="lp-psychology__card">
+                        <img src="満たされる幸福感.jpg" alt="満たされる幸福感 イメージ" class="lp-psychology__card-icon">
+                        <div class="lp-psychology__card-content">
+                            <h3 class="lp-psychology__card-title">満たされる幸福感</h3>
+                            <p>「ありがとう」の一言が、脳内で幸福物質を分泌させ、ストレスを軽減。心からの充実感を味わえます。</p>
+                        </div>
+                    </div>
+                    <div class="lp-psychology__card">
+                        <img src="ゆるぎない自信.jpg" alt="ゆるぎない自信 イメージ" class="lp-psychology__card-icon">
+                        <div class="lp-psychology__card-content">
+                            <h3 class="lp-psychology__card-title">揺るぎない自信</h3>
+                            <p>誰かの役に立てたという事実が、自己肯定感を育む最高の栄養に。自分をもっと好きになれます。</p>
+                        </div>
+                    </div>
+                    <div class="lp-psychology__card">
+                        <img src="新しい絆.jpg" alt="新しい絆 イメージ" class="lp-psychology__card-icon">
+                        <div class="lp-psychology__card-content">
+                            <h3 class="lp-psychology__card-title">新しい「絆」の発見</h3>
+                            <p>共通の目的を持つ仲間との出会いは、孤独感を解消し、人生を豊かにする新たな関係性を築きます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Evidence -->
+        <section id="evidence" class="lp-evidence">
+            <div class="container lp-evidence__container">
+                <div class="lp-evidence__stats">
+                    <div class="lp-evidence__stat-item">
+                        <div class="lp-evidence__stat-number">42%</div>
+                        <div class="lp-evidence__stat-text">幸福度UP</div>
+                    </div>
+                    <div class="lp-evidence__stat-item">
+                        <div class="lp-evidence__stat-number">5年</div>
+                        <div class="lp-evidence__stat-text">寿命が延びる傾向</div>
+                    </div>
+                     <div class="lp-evidence__stat-item">
+                        <div class="lp-evidence__stat-number">30%</div>
+                        <div class="lp-evidence__stat-text">ストレス軽減</div>
+                    </div>
+                </div>
+                <div class="lp-evidence__expert">
+                    <p class="lp-evidence__expert-comment">「人間は社会的な生き物です。他者への貢献行動は、脳の報酬系を活性化させ、オキシトシンなどの“幸せホルモン”の分泌を促します。これは、単なる気休めではなく、心身の健康に直結する科学的な事実なのです。」</p>
+                    <p class="lp-evidence__expert-source">― 米ハーバード大学 心理学研究チーム</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Story / Testimonial Carousel -->
+        <section id="story" class="lp-story">
+            <div class="container">
+                <h2 class="section-title">「変わった」を実感する声</h2>
+                <div class="lp-story__carousel">
+                    <div class="lp-story__slide is-active">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=466&auto=format&fit=crop" alt="体験者 女性" class="lp-story__photo">
+                        <p class="lp-story__comment">「地域の清掃活動に参加しただけなのに、ご近所さんと顔見知りに。日常の挨拶がこんなに温かいなんて、新しい発見でした。」</p>
+                        <p class="lp-story__name">佐藤 優子 / 主婦</p>
+                    </div>
+                    <div class="lp-story__slide">
+                        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=387&auto=format&fit=crop" alt="体験者 男性" class="lp-story__photo">
+                        <p class="lp-story__comment">「後輩の相談に乗っていたら、自分の新人時代を思い出し、初心に帰れました。教えることが一番の学びだと痛感しています。」</p>
+                        <p class="lp-story__name">高橋 健太 / ITエンジニア</p>
+                    </div>
+                    <div class="lp-story__slide">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=388&auto=format&fit=crop" alt="体験者 女性 2" class="lp-story__photo">
+                        <p class="lp-story__comment">「自分のスキルが誰かのビジネスの役に立つ。フリーランスとして、お金以上のやりがいと、確かな自信を得られました。」</p>
+                        <p class="lp-story__name">鈴木 明日香 / Webデザイナー</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Career & Business Benefits -->
+        <section id="career" class="lp-career">
+            <div class="container">
+                <h2 class="section-title lp-career__title">“与える人”は、<br>選ばれるリーダーになる</h2>
+                <ul class="lp-career__list">
+                    <li class="lp-career__item">信頼の獲得と人脈形成</li>
+                    <li class="lp-career__item">視座の向上と課題解決力</li>
+                    <li class="lp-career__item">予期せぬ協力と機会の創出</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 6. Social Impact -->
+        <section id="impact" class="lp-impact">
+            <div class="container">
+                <h2 class="section-title">あなたの一歩が、社会を変える。</h2>
+                <div class="lp-impact__infographic">
+                    <div class="lp-impact__step">
+                        <svg class="lp-impact__icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="35" r="15" fill="var(--primary-light)"/><path d="M20 90 C 20 70, 80 70, 80 90 Z" fill="var(--primary-light)"/></svg>
+                        <h3>1. 小さな貢献</h3>
+                        <p>あなたの行動が最初の波紋を起こす。</p>
+                    </div>
+                    <div class="lp-impact__arrow">→</div>
+                    <div class="lp-impact__step">
+                        <svg class="lp-impact__icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="var(--primary-light)"><circle cx="30" cy="35" r="10"/><path d="M15 70 C 15 55, 45 55, 45 70 Z"/><circle cx="70" cy="35" r="10"/><path d="M55 70 C 55 55, 85 55, 85 70 Z"/></g></svg>
+                        <h3>2. 共感の連鎖</h3>
+                        <p>思いが伝わり、仲間が集まり始める。</p>
+                    </div>
+                    <div class="lp-impact__arrow">→</div>
+                    <div class="lp-impact__step">
+                        <svg class="lp-impact__icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 C 20 10, 10 40, 50 90 C 90 40, 80 10, 50 10 Z" fill="none" stroke="var(--primary-light)" stroke-width="5"/><path d="M50 30 C 40 50, 60 50, 50 70" fill="none" stroke="var(--primary-light)" stroke-width="5"/></svg>
+                        <h3>3. 持続可能な未来へ</h3>
+                        <p>社会全体を良くする大きな力に成長。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Final CTA -->
+        <section id="cta" class="lp-cta">
+            <div class="container">
+                <h2 class="lp-cta__title">今日から小さな一歩を</h2>
+                <p style="margin-bottom: 24px; max-width: 550px; margin-left:auto; margin-right:auto; opacity: 0.9;">あなたのメールアドレスに、明日からできる貢献活動の具体的なアイデアをお届けします。ご登録は無料です。</p>
+                <form class="lp-cta__form-mock" action="mailto:tanitaku.kango@gmail.com" method="post" enctype="text/plain">
+                    <input type="email" name="email_address" placeholder="メールアドレスを入力" class="lp-cta__input" required>
+                    <input type="hidden" name="subject" value="【他者貢献LP】貢献のヒント申し込み">
+                    <button type="submit" class="lp-cta__button">貢献のヒントを受け取る</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- 8. Footer -->
+    <footer class="lp-footer">
+        <div class="container">
+            <div class="lp-footer__logo"></div>
+            <div class="lp-footer__links">
+                <a href="#0">プライバシーポリシー</a>
+                <a href="#0">運営者情報</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Hamburger Menu ---
+            const hamburger = document.querySelector('.lp-index__hamburger');
+            const navList = document.querySelector('.lp-index__nav-list');
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('is-active');
+                navList.classList.toggle('is-active');
+            });
+            // Close menu when a link is clicked
+            document.querySelectorAll('.lp-index__nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('is-active');
+                    navList.classList.remove('is-active');
+                });
+            });
+
+            // --- Story Carousel ---
+            const slides = document.querySelectorAll('.lp-story__slide');
+            let currentSlide = 0;
+            if (slides.length > 0) {
+                setInterval(() => {
+                    slides[currentSlide].classList.remove('is-active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('is-active');
+                }, 5000); // 5 seconds
+            }
+
+            // --- Smooth Scroll for all anchor links ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    // Do not scroll for dummy links
+                    if (href === '#0') return;
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
